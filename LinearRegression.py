@@ -21,15 +21,23 @@ def step_gradient(x, y, b_current, m_current):
   m = m_current - (0.01 * m_gradient)
   return (b, m)
 
+def gradient_descent(x, y, learning_rate, num_iterations):
+  # initial guesses
+  b = 0
+  m = 0
+  for i in range(num_iterations):
+    b, m = step_gradient(b, m, x, y, learning_rate)
+  return (b, m)
+
+
 months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 revenue = [52, 74, 79, 95, 115, 110, 129, 126, 147, 146, 156, 184]
 
-# starting intercept guess:
-b = 0
-# starting slope guess:
-m = 0
+b, m = gradient_descent(months, revenue, 0.01, 1000)
 
+y = [m*x + b for x in months]
 
-b, m = step_gradient(months, revenue, b, m)
+plt.plot(months, revenue, "o")
+plt.plot(months, y)
 
-print(b, m)
+plt.show()
